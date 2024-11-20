@@ -49,6 +49,9 @@ Note: go get coffee... this apply can take around 15-20mins.
 
 ## Access the cluster
 
+This is a private GKE cluster with no external access.  In order
+to use this cluster, we'll take advantage of the jumpbox we created.
+
 There are many ways to use a jumpbox in a development workflow.
 Here, we'll go over how to set up:
 - working _from_ the jumpbox.  Where you log into the jumpbox and do
@@ -202,9 +205,12 @@ You can watch progress with
 kubectl get pods
 ```
 
-You can access the debug-pod using `kubectl exec -it debug-pod -- bash`.
+You can access the debug-pod using
+```bash
+kubectl exec -it debug-pod -- bash
+```
 
-Once in the debug pod, you can do things like
+Once inside the debug pod, you can do things like
 ```bash
 curl http://nginx.default.svc.cluster.local
 ```
