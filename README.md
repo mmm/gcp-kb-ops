@@ -49,6 +49,15 @@ Note: go get coffee... this apply can take around 15-20mins.
 
 ## Access the cluster
 
+There are many ways to use a jumpbox in a development workflow.
+Here, we'll go over how to set up:
+- working _from_ the jumpbox.  Where you log into the jumpbox and do
+  development there.
+- working _through_ the jumpbox.  Where you work from your development
+  workstation and use the jumpbox just to selectively forward ports needed to
+  access your k8s cluster.
+
+
 ### Work _from_ the jumpbox
 
 Access the jumpbox:
@@ -126,12 +135,12 @@ spec:
         - containerPort: 80
 ```
 and then instantiate this:
-```
+```bash
 kubectl apply -f nginx-deployment.yaml
 ```
 
 You can watch progress with
-```
+```bash
 kubectl get deployments
 ```
 (Remember to add the `--insecure-skip-tls-verify` flag if you're jumping
@@ -157,12 +166,12 @@ spec:
       protocol: TCP
 ```
 and then instantiate this:
-```
+```bash
 kubectl apply -f nginx-svc.yaml
 ```
 
 You can watch progress with
-```
+```bash
 kubectl get svc
 ```
 
@@ -183,10 +192,20 @@ spec:
     command: ["/bin/sleep"]  # Sleep command to keep the container running
     args: ["infinity"]  # Sleep indefinitely to prevent the container from exiting
 ```
-which you can access using `kubectl exec -it debug-pod -- bash`.
+and then instantiate this:
+```bash
+kubectl apply -f debug-pod.yaml
+```
+
+You can watch progress with
+```bash
+kubectl get pods
+```
+
+You can access the debug-pod using `kubectl exec -it debug-pod -- bash`.
 
 Once in the debug pod, you can do things like
-```
+```bash
 curl http://nginx.default.svc.cluster.local
 ```
 to check the service and deployment you created above.
